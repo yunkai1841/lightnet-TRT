@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1) 
-project(lightNet-TRT VERSION 1.0)            
+project(lightnet-TRT VERSION 1.0)            
 enable_language(CUDA)
 
 find_package(OpenMP REQUIRED)
@@ -22,8 +22,8 @@ target_include_directories(detector PRIVATE extra/ modules/ ${OpenCV_INCLUDE_DIR
 target_link_libraries(detector nvinfer nvinfer_plugin nvparsers gflags "stdc++fs")
 
 
-add_executable(lightNet-TRT samples/sample_detector.cpp ${sources})
+add_executable(lightnet-TRT samples/sample_detector.cpp ${sources})
 
 
-target_include_directories(lightNet-TRT PRIVATE modules/ extra/)
-target_link_libraries(lightNet-TRT  ${OpenCV_LIBS} nvinfer nvinfer_plugin nvparsers gflags boost_system boost_filesystem "stdc++fs" "stdc++")
+target_include_directories(lightnet-TRT PRIVATE modules/ extra/)
+target_link_libraries(lightnet-TRT  ${OpenCV_LIBS} nvinfer nvinfer_plugin nvparsers gflags boost_system boost_filesystem "stdc++fs" "stdc++")
