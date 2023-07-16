@@ -116,22 +116,21 @@ int main(int argc, char** argv) {
                                  src.cols, src.rows);
             }
             // disp
-            if (dont_show == true) {
-                continue;
-            }
-            for (int i = 0; i < batch_img.size(); ++i) {
-                for (const auto& r : batch_res[i]) {
-                    //	  std::cout <<"batch "<<i<< " id:" << r.id << " prob:"
-                    //<< r.prob << " rect:" << r.rect << std::endl;
-                    detector->draw_BBox(batch_img[i], r);
-                }
-                cv::namedWindow("image" + std::to_string(i), cv::WINDOW_NORMAL);
-                cv::imshow("image" + std::to_string(i), batch_img[i]);
-                int k = cv::waitKey(0);
-                if (k == 32) {
-                    std::cout << "Save... " << name << std::endl;
-                    detector->save_image(src, "log/", name);
-                    cv::waitKey(0);
+            if (!dont_show) {
+                for (int i = 0; i < batch_img.size(); ++i) {
+                    for (const auto& r : batch_res[i]) {
+                        //	  std::cout <<"batch "<<i<< " id:" << r.id << " prob:"
+                        //<< r.prob << " rect:" << r.rect << std::endl;
+                        detector->draw_BBox(batch_img[i], r);
+                    }
+                    cv::namedWindow("image" + std::to_string(i), cv::WINDOW_NORMAL);
+                    cv::imshow("image" + std::to_string(i), batch_img[i]);
+                    int k = cv::waitKey(0);
+                    if (k == 32) {
+                        std::cout << "Save... " << name << std::endl;
+                        detector->save_image(src, "log/", name);
+                        cv::waitKey(0);
+                    }
                 }
             }
         }

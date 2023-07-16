@@ -220,10 +220,10 @@ NetworkInfo getYoloNetworkInfo() {
                        FLAGS_engine_file_path,
                        FLAGS_input_blob_name,
                        "",
-                       FLAGS_batch_size,
-                       FLAGS_width,
-                       FLAGS_height,
-                       FLAGS_dla};
+                       (int) FLAGS_batch_size,
+                       (int) FLAGS_width,
+                       (int) FLAGS_height,
+                       (int) FLAGS_dla};
 }
 
 NetworkInfo getYoloNetworkInfo1() {
@@ -237,10 +237,10 @@ NetworkInfo getYoloNetworkInfo1() {
                        FLAGS_engine_file_path,
                        FLAGS_input_blob_name,
                        "",
-                       FLAGS_batch_size,
-                       FLAGS_width,
-                       FLAGS_height,
-                       FLAGS_dla1};
+                       (int) FLAGS_batch_size,
+                       (int) FLAGS_width,
+                       (int) FLAGS_height,
+                       (int) FLAGS_dla1};
 }
 
 NetworkInfo getYoloNetworkInfo2() {
@@ -254,10 +254,10 @@ NetworkInfo getYoloNetworkInfo2() {
                        FLAGS_engine_file_path,
                        FLAGS_input_blob_name,
                        "",
-                       FLAGS_batch_size,
-                       FLAGS_width,
-                       FLAGS_height,
-                       FLAGS_dla2};
+                       (int) FLAGS_batch_size,
+                       (int) FLAGS_width,
+                       (int) FLAGS_height,
+                       (int) FLAGS_dla2};
 }
 
 std::vector<std::string> get_names(void) {
