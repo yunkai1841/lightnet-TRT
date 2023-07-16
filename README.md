@@ -47,72 +47,77 @@ LightNet-TRT also supports multitask execution, allowing the network to perform 
 1.  Clone the repository.
     
 ```shell
-$ git clone https://github.com/daniel89710/lightNet-TRT.git
-$ cd lightNet-TRT
+git clone https://github.com/daniel89710/lightNet-TRT.git
+cd lightNet-TRT
 ```
 	
 2.  Install libraries.
 						    
 ```shell
-$ sudo apt update
-$ sudo apt install libgflags-dev
-$ sudo apt install libboost-all-dev
+sudo apt update
+sudo apt install libgflags-dev
+sudo apt install libboost-all-dev
 ```
 										    
 3.  Compile the TensorRT implementation.
 											    
 ```shell
-$ mkdir build
-$ cmake ../
-$ make -j
+mkdir build
+cmake ../
+make -j
 ```
 
 ## Model	
-| Model | Resolutions | GFLOPS | Params | Precision | Sparsity | DNN time on RTX3080 | DNN time on Jetson Orin NX 16GB GPU | DNN time on Jetson Orin NX 16GB DLA| DNN time on Jetson Orin Nano 4GB GPU | cfg | weights |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| lightNet | 1280x960 | 58.01 | 9.0M | int8 | 49.8% | 1.30ms | 7.6ms | 14.2ms | 14.9ms | [github](https://github.com/daniel89710/lightNet/blob/master/cfg/lightNet-BDD100K-1280x960.cfg) |[GoogleDrive](https://drive.google.com/file/d/1qTBQ0BkIYqcyu1BwC54_Z9T1_b702HKf/view?usp=sharing) |
-| LightNet+Semseg | 1280x960 | 76.61 | 9.7M | int8 | 49.8% | 2.06ms | 15.3ms | 23.2ms | 26.2ms | [github](https://github.com/daniel89710/lightNet-TRT/blob/main/configs/lightNet-BDD100K-det-semaseg-1280x960.cfg) | [GoogleDrive](https://drive.google.com/file/d/1ttdVtlDiPun13EQCB4Nyls3Q8w5aXg1i/view?usp=sharing)|
-| lightNet pruning | 1280x960 | 35.03 | 4.3M | int8 | 49.8% | 1.21ms | 8.89ms | 11.68ms | 13.75ms | [github](https://github.com/daniel89710/lightNet-TRT/blob/main/configs/lightNet-BDD100K-1280x960-chPruning.cfg) |[GoogleDrive](https://drive.google.com/file/d/1OGZApPeNH7K08-89eJ8tGhzA9kkRFLii/view?usp=sharing) |
-| LightNet pruning +SemsegLight | 1280x960 | 44.35 | 4.9M | int8 | 49.8% | 1.80ms | 9.89ms | 15.26ms | 23.35ms | [github](https://github.com/daniel89710/lightNet-TRT/blob/main/configs/lightNet-BDD100K-chPruning-det-semaseg-1280x960.cfg) | [GoogleDrive](https://drive.google.com/file/d/1dytYnqS4h_5YK73tr6DOZTUYUEKZYsFe/view?usp=drive_link)|
+| Model                         | Resolutions | GFLOPS | Params | Precision | Sparsity | DNN time on RTX3080 | DNN time on Jetson Orin NX 16GB GPU | DNN time on Jetson Orin NX 16GB DLA | DNN time on Jetson Orin Nano 4GB GPU | cfg                                                                                                                         | weights                                                                                              |
+| ----------------------------- | ----------- | ------ | ------ | --------- | -------- | ------------------- | ----------------------------------- | ----------------------------------- | ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| lightNet                      | 1280x960    | 58.01  | 9.0M   | int8      | 49.8%    | 1.30ms              | 7.6ms                               | 14.2ms                              | 14.9ms                               | [github](https://github.com/daniel89710/lightNet/blob/master/cfg/lightNet-BDD100K-1280x960.cfg)                             | [GoogleDrive](https://drive.google.com/file/d/1qTBQ0BkIYqcyu1BwC54_Z9T1_b702HKf/view?usp=sharing)    |
+| LightNet+Semseg               | 1280x960    | 76.61  | 9.7M   | int8      | 49.8%    | 2.06ms              | 15.3ms                              | 23.2ms                              | 26.2ms                               | [github](https://github.com/daniel89710/lightNet-TRT/blob/main/configs/lightNet-BDD100K-det-semaseg-1280x960.cfg)           | [GoogleDrive](https://drive.google.com/file/d/1ttdVtlDiPun13EQCB4Nyls3Q8w5aXg1i/view?usp=sharing)    |
+| lightNet pruning              | 1280x960    | 35.03  | 4.3M   | int8      | 49.8%    | 1.21ms              | 8.89ms                              | 11.68ms                             | 13.75ms                              | [github](https://github.com/daniel89710/lightNet-TRT/blob/main/configs/lightNet-BDD100K-1280x960-chPruning.cfg)             | [GoogleDrive](https://drive.google.com/file/d/1OGZApPeNH7K08-89eJ8tGhzA9kkRFLii/view?usp=sharing)    |
+| LightNet pruning +SemsegLight | 1280x960    | 44.35  | 4.9M   | int8      | 49.8%    | 1.80ms              | 9.89ms                              | 15.26ms                             | 23.35ms                              | [github](https://github.com/daniel89710/lightNet-TRT/blob/main/configs/lightNet-BDD100K-chPruning-det-semaseg-1280x960.cfg) | [GoogleDrive](https://drive.google.com/file/d/1dytYnqS4h_5YK73tr6DOZTUYUEKZYsFe/view?usp=drive_link) |
  	
  * "DNN time" refers to the time measured by IProfiler during the enqueueV2 operation, excluding pre-process and post-process times.
  * Orin NX has three independent AI processors, allowing lightNet to be parallelized across a GPU and two DLAs.																
  * Orin Nano 4GB has only iGPU with 512 CUDA cores.
 ## Usage
 
+1. Put `calibration_images.txt` in `configs` folder. (Only for INT8 calibration)  
+In `calibration_images.txt`, write the **abs** path of the image to be used for calibration.
+2. Build engine.
+3. Run inference.
+
 ### Converting a LightNet model to a TensorRT engine
-						
+
 Build FP32 engine
 ```shell
-$ ./lightNet-TRT --flagfile ../configs/lightNet-BDD100K-det-semaseg-1280x960.txt --precision kFLOAT
+./lightNet-TRT --flagfile ../configs/lightNet-BDD100K-det-semaseg-1280x960.txt --precision kFLOAT
 ```
 
 Build FP16(HALF) engine
 ```shell
-$ ./lightNet-TRT --flagfile ../configs/lightNet-BDD100K-det-semaseg-1280x960.txt --precision kHALF
+./lightNet-TRT --flagfile ../configs/lightNet-BDD100K-det-semaseg-1280x960.txt --precision kHALF
 ```
 
 Build INT8 engine 
 (You need to prepare a list for calibration in "configs/calibration_images.txt".)
 ```shell
-$ ./lightNet-TRT --flagfile ../configs/lightNet-BDD100K-det-semaseg-1280x960.txt --precision kINT8
+./lightNet-TRT --flagfile ../configs/lightNet-BDD100K-det-semaseg-1280x960.txt --precision kINT8
 ```
 
 Build DLA engine (Supported by only Xavier and Orin)
 ```shell
-$ ./lightNet-TRT --flagfile ../configs/lightNet-BDD100K-det-semaseg-1280x960.txt --precision kINT8 --dla [0/1]
+./lightNet-TRT --flagfile ../configs/lightNet-BDD100K-det-semaseg-1280x960.txt --precision kINT8 --dla [0/1]
 ```
 
 ### Inference with the TensorRT engine
 
 Inference from images
 ```shell
-$ ./lightNet-TRT --flagfile ../configs/lightNet-BDD100K-det-semaseg-1280x960.txt --precision [kFLOAT/kHALF/kINT8] {--dla [0/1]} --d DIRECTORY
+./lightNet-TRT --flagfile ../configs/lightNet-BDD100K-det-semaseg-1280x960.txt --precision [kFLOAT/kHALF/kINT8] {--dla [0/1]} --d DIRECTORY
 ```
 
 Inference from images
 ```shell
-$ ./lightNet-TRT --flagfile ../configs/lightNet-BDD100K-det-semaseg-1280x960.txt --precision [kFLOAT/kHALF/kINT8] {--dla [0/1]} --d VIDEO
+./lightNet-TRT --flagfile ../configs/lightNet-BDD100K-det-semaseg-1280x960.txt --precision [kFLOAT/kHALF/kINT8] {--dla [0/1]} --d VIDEO
 ```
 
 ## Implementation

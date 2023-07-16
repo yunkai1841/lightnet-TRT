@@ -1,3 +1,6 @@
+calibration/
+configs/calibration_images.txt
+
 *.o
 *.a
 *.dSYM
