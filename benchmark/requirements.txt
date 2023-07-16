@@ -1,0 +1,4 @@
+jetson_stats
+matplotlib
+pandas
+numpy
