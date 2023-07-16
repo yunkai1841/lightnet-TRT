@@ -25,8 +25,8 @@ def main(logdir, show=True, save=False, savefile="power.png"):
         label = path.basename(logfile).split(".")[0]
         ax.plot(df["time"], df["total"], label=label)
     ax.legend()
-    ax.set_xlabel("Time (s)")
-    ax.set_ylabel("Power (mW)")
+    ax.set_xlabel("Elapsed time from load model (s)")
+    ax.set_ylabel("Machine total power consumption (mW)")
     ax.set_title("Power consumption")
     if save:
         plt.savefig(savefile)

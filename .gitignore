@@ -1,5 +1,6 @@
 calibration/
 configs/calibration_images.txt
+log*/
 
 *.o
 *.a
