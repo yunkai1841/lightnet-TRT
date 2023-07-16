@@ -5,6 +5,8 @@
 #include <iostream>
 #include <memory>
 #include <thread>
+#include <chrono>
+#include <ctime>
 
 #include "class_detector.h"
 // #include "class_timer.hpp"
@@ -91,6 +93,11 @@ int main(int argc, char** argv) {
         p.append("detections");
         fs::create_directory(p);
     }
+
+    // print start time
+    auto start = std::chrono::system_clock::now();
+    std::time_t start_time = std::chrono::system_clock::to_time_t(start);
+    std::cout << "start time: " << std::ctime(&start_time) << std::endl;
 
     if (directory != "") {
         for (const auto& file :

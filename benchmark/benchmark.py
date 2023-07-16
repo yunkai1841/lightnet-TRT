@@ -15,13 +15,13 @@ log = []
 
 
 def make_command(
-    cmd: str = "./lightNet-TRT",
-    flagfile: str = "../configs/lightNet-BDD100K-det-semaseg-1280x960.txt",
+    cmd: str = "./lightnet-TRT",
+    flagfile: str = "../configs/lightNet-BDD100K-1280x960.txt",
     dla: Optional[Literal[0, 1]] = None,
     precision: Literal["kINT8", "kHALF", "kFLOAT"] = "kINT8",
     dont_show: bool = True,
     prof: bool = True,
-    imgdir: str = "./images",
+    imgdir: str = "../images/",
 ) -> List[str]:
     return [
         cmd,
@@ -67,7 +67,7 @@ def main(logfile: str):
     print("Saving log on {file}".format(file=logfile))
 
     try:
-        with jtop(interval=0.05) as jetson:
+        with jtop(interval=0.01) as jetson:
             while True:
                 sleep(0.01)
                 powerlog(jetson)
@@ -109,16 +109,16 @@ if __name__ == "__main__":
             "cwd": "build",
             "process": None,
         },
-        {
-            "command": make_command(dla=0, precision="kINT8"),
-            "cwd": "build",
-            "process": None,
-        },
-        {
-            "command": make_command(dla=1, precision="kINT8"),
-            "cwd": "build",
-            "process": None,
-        },
+        # {
+        #     "command": make_command(dla=0, precision="kINT8"),
+        #     "cwd": "build",
+        #     "process": None,
+        # },
+        # {
+        #     "command": make_command(dla=1, precision="kINT8"),
+        #     "cwd": "build",
+        #     "process": None,
+        # },
     ]
 
     # run main
