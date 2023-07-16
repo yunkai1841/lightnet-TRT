@@ -7,7 +7,7 @@
 #include <thread>
 
 #include "class_detector.h"
-#include "class_timer.hpp"
+// #include "class_timer.hpp"
 #include "yolo_config_parser.h"
 
 namespace fs = boost::filesystem;
