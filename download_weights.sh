@@ -7,13 +7,15 @@ filelist=(\
 "https://drive.google.com/file/d/1ttdVtlDiPun13EQCB4Nyls3Q8w5aXg1i/view" \
 "https://drive.google.com/file/d/1OGZApPeNH7K08-89eJ8tGhzA9kkRFLii/view" \
 "https://drive.google.com/file/d/1dytYnqS4h_5YK73tr6DOZTUYUEKZYsFe/view" \
+"https://drive.google.com/file/d/1hrHeugq0-mL6EtxUAi-rkfrzg6KwgCQQ/view" \
 )
 
 filenames=(\
 "lightNet-BDD100K-1280x960.weights" \
 "lightNet-BDD100K-det-semaseg-1280x960.weights" \
 "lightNet-BDD100K-1280x960-chPruning.weights" \
-"lightNet-BDD100K-chPruning-det-semaseg-1280x960.weights"\
+"lightNet-BDD100K-chPruning-det-semaseg-1280x960.weights" \
+"yolov8x-BDD100K-1280x960.weights"
 )
 
 # Download weights
